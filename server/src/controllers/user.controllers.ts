@@ -15,7 +15,12 @@ class UserController{
             const user = await UserService.create(req.body)
             const token = await createJWT({user})
 
-            res.status(200).json(token)
+            const data = {
+                token,
+                user
+            }
+
+            res.status(200).json(data)
         } catch (error) {
             console.log(error);
             res.sendStatus(500)
@@ -23,7 +28,25 @@ class UserController{
     };
 
     async login(req: Request, res: Response){
+        try {
+            const user = await UserService.getUserByEmailAndPassword(req.body);
         
+            if (user === null) {
+              const token = null
+              res.status(200).json(token);
+            } else {
+              const token = await createJWT({user});
+        
+              const data = {
+                token,
+                user
+              }
+              res.status(200).json(data);
+            }
+          } catch (error) {
+            console.log(error);
+            res.sendStatus(500);
+          }
     }
 
     async getUserByToken(req:Request,res:Response){
