@@ -3,7 +3,7 @@ import { PORT } from "./config/conf";
 import cors from 'cors';
 import morgan from "morgan";
 import { createTables } from "./db/relations";
-
+import routerUser from "./routes/auth.routes";
 class Server {
 
     private app: Application;
@@ -38,7 +38,7 @@ class Server {
     }
 
     Routes():void{
-
+        this.app.use("/api", routerUser)
     }
 
     listen(){
