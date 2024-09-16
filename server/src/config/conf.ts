@@ -11,3 +11,4 @@ export const DB_PASSWORD :vr= process.env.DB_PASSWORD
 export const DB_PORT:vr=process.env.DB_PORT
 export const DB_DIALECT: string | undefined=process.env.DB_DIALECT
 export const DB_USERNAME:vr=process.env.DB_USERNAME
+export const SECRET:vr = process.env.SECRET
