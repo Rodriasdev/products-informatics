@@ -17,6 +17,7 @@ class Server {
 
         this.dbconnect()
         this.middlewares()
+        this.Routes()
     }
 
     async dbconnect():Promise<void>{
@@ -38,7 +39,7 @@ class Server {
     }
 
     Routes():void{
-        this.app.use("/api", routerUser)
+        this.app.use('/api', routerUser)
     }
 
     listen(){
