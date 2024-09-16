@@ -2,7 +2,7 @@ import express, {Application} from "express";
 import { PORT } from "./config/conf";
 import cors from 'cors';
 import morgan from "morgan";
-import { sequelize } from "./db/connection";
+import { createTables } from "./db/relations";
 
 class Server {
 
@@ -21,8 +21,7 @@ class Server {
 
     async dbconnect():Promise<void>{
         try {
-            await sequelize.authenticate()
-            await sequelize.sync()
+            await createTables()
 
             console.log("database connected");
             
