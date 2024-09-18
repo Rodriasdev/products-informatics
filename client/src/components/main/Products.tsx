@@ -26,18 +26,6 @@ export const Products = () => {
     <div className="bg-light min-vh-100">
       <div className="container mt-4">
         <div className="row">
-          <div className="col-md-4">
-            <div className="card">
-              <div className="card-body">
-                <h5 className="card-title">Resumen de Inventario</h5>
-                <p className="card-text">
-                  {/* Total de equipos: {equipments.length}<br />
-                  Equipos activos: {equipments.filter(e => e.status === 'Activo').length}<br />
-                  En mantenimiento: {equipments.filter(e => e.status === 'En mantenimiento').length} */}
-                </p>
-              </div>
-            </div>
-          </div>
           <div className='text-end'>
             <button className='btn btn-primary' onClick={() => navigate('/form-product')}>Nuevo Producto</button>
           </div>
