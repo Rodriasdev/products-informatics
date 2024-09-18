@@ -1,17 +1,22 @@
-import React, { ChangeEvent, HtmlHTMLAttributes, InputHTMLAttributes, useState } from "react"
+import { ChangeEvent, useState } from "react"
 import { UserDto } from "../../types/user.dto"
 
 export const Formulario = () => {
     const [formState,setFormState] = useState<UserDto>({
         email: "",
-        username: "",
         password: ""
     })
 
 
-    // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    //     setFormState()
-    // }
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const newFormData = {
+            ...formState,
+            [e.target.name]: e.target.value
+        }
+
+        setFormState(newFormData)
+        
+    }
 
     return(
         <main className="container-fluid bg-light">
@@ -21,11 +26,11 @@ export const Formulario = () => {
                 <form className="px-4 py-3">
                     <div className="mb-3">
                         <label htmlFor="exampleDropdownFormEmail1" className="form-label">Email</label>
-                        <input type="email" className="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com"/>
+                        <input name="email" onChange={handleChange} value={formState.email} type="email" className="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com"/>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="exampleDropdownFormPassword1" className="form-label">Contraseña</label>
-                        <input type="password" className="form-control" id="exampleDropdownFormPassword1" placeholder="Contraseña"/>
+                        <input name="password" onChange={handleChange} value={formState.password} type="password" className="form-control" id="exampleDropdownFormPassword1" placeholder="Contraseña"/>
                     </div>
                     <div className="mb-3">
                     </div>
