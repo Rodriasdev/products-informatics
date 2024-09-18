@@ -1,8 +1,13 @@
 import { BrowserRouter, Route,Routes } from "react-router-dom";
 import { Register } from "../pages/Register";
 import { Home } from "../pages/Home";
+import { PrivateRoute } from "./PrivateRoutes";
+
+
 
 export const AppRoutes = () => {
+
+    
     return (
         <BrowserRouter>
             <Routes>
@@ -11,7 +16,11 @@ export const AppRoutes = () => {
                     path="/"
                 />
                 <Route
-                    element={<Home/>}
+                    element={
+                    <PrivateRoute>
+                        <Home/>
+                    </PrivateRoute>
+                }
                     path="/home"
                 />
             </Routes>
