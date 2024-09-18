@@ -16,6 +16,7 @@ export const Products = () => {
     brand: '',
     model: ''
   });
+  const [reloadList, setReloadList] = useState<boolean>(true)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -51,7 +52,16 @@ export const Products = () => {
       })
     }
 
-    
+    setReloadList(!reloadList)
+
+    Swal.fire({
+      title: 'Producto agregado',
+      icon: 'success',
+      width: '50%',
+      padding: '1rem',
+      background: '#DBCBCB',
+      grow: 'row'
+    })
 
   };
 
@@ -63,7 +73,7 @@ export const Products = () => {
         setProductState(data)
       }
     )()
-  },[])
+  },[reloadList])
 
   return (
     <div className="bg-light min-vh-100">
@@ -167,7 +177,7 @@ export const Products = () => {
           </div>
         </div>
 
-        <ProductList productState={productState}/>
+        <ProductList reloadList={reloadList} setReloadList={setReloadList}  productState={productState}/>
 
       </div>
     </div>
