@@ -42,8 +42,9 @@ class ProductController {
 
   async update(req: Request, res: Response) {
     try {
+      const id = parseInt(req.params.id)
       const data: updateProductDto = req.body;
-      const updatedProduct = await ProductService.update(data);
+      const updatedProduct = await ProductService.update(data,id);
 
       if (!updatedProduct) {
         return res.status(404).json({ message: "Product not found" });

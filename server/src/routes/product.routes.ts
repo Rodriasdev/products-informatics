@@ -8,7 +8,7 @@ const router = Router()
 
 router.post('/product',validateToken,productValidationRules,validator, ProductControllers.create)
 router.get('/product', ProductControllers.findAll)
-router.put('/product', ProductControllers.update)
+router.put('/product/:id', validateToken, productValidationRules, validator, ProductControllers.update)
 router.get('/product/:id', ProductControllers.findOne)
 router.delete('/product/:id', validateToken, ProductControllers.delete)
 

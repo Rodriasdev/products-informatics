@@ -72,7 +72,43 @@ export const FormProduct : React.FC<props> = ({request,id}) => {
     }
 
     if(request === "PUT"){
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/product/${id}`,{
+            method:'PUT',
+            body: JSON.stringify(newEquipment),
+            headers:{
+                'content-type': 'application/json',
+                authorization: authState.token!
+            }
+        })
 
+        const data = await response.json()
+
+        
+        if (data.errors) {
+            return Swal.fire({
+              title: 'Error',
+              text: data.errors[0].msg,
+              icon: 'error',
+              width: '50%',
+              padding: '1rem',
+              background: '#DBCBCB',
+              grow: 'row'
+            })
+          }
+      
+      
+          Swal.fire({
+            title: 'Producto editado',
+            icon: 'success',
+            width: '50%',
+            padding: '1rem',
+            background: '#DBCBCB',
+            grow: 'row'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                navigate('/home')
+              }
+            })
     }
   };
 

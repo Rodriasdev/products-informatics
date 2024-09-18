@@ -26,8 +26,8 @@ class ProductService {
     }
 
 
-    async update(data: updateProductDto){
-        const product = await this.findOne(data.id)
+    async update(data: updateProductDto, id:number){
+        const product = await this.findOne(id)
 
         if (!product){
             return null
