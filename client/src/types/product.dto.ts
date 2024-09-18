@@ -1,4 +1,5 @@
 export interface productDto {
+    id?: string;
     name?:string
     description?: string;
     brand?: string;
@@ -8,6 +9,6 @@ export interface productDto {
     location?: string;
 }
 
-export interface updateProductDto extends productDto{
-    id:number
-}
+// export interface updateProductDto extends productDto{
+//     id:number
+// }

@@ -24,15 +24,15 @@ export const ProductList: React.FC<Props> = ({productState}) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {/* {equipments.map(equipment => (
-                        <tr key={equipment.id}>
-                        <td>{equipment.id}</td>
-                        <td>{equipment.name}</td>
-                        <td>{equipment.status}</td>
-                        <td>{equipment.location}</td>
-                        <td>{equipment.acquisitionDate}</td>
+                    {productState.map(product => (
+                        <tr key={product.id}>
+                        <td>{product.id}</td>
+                        <td>{product.name}</td>
+                        <td>{product.state}</td>
+                        <td>{product.location}</td>
+                        <td>{product.acquisition_date}</td>
                         </tr>
-                    ))} */}
+                    ))}
                     </tbody>
                 </table>
                 </div>

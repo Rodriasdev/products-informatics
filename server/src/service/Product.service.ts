@@ -8,6 +8,8 @@ class ProductService {
 
 
     async create(data: productDto){
+        console.log(data);
+        
         return await ProductModel.create(data as any)
     }
 
