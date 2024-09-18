@@ -20,7 +20,7 @@ export const Header = () => {
                         <li className="nav-item">
                             <a className="nav-link" href="#home">Inicio</a>
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                             <a className="nav-link" href="#inventory">Inventario</a>
                         </li>
                         <li className="nav-item">
@@ -28,7 +28,7 @@ export const Header = () => {
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="#reports">Informes</a>
-                        </li>
+                        </li> */}
                         </ul>
                     </div>
                     :""

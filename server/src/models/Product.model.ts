@@ -2,13 +2,9 @@ import { sequelize } from "../db/connection";
 import { DataTypes } from "sequelize";
 
 export const ProductModel = sequelize.define('product', {
-    type: {
+    name: {
         type: DataTypes.STRING,
-        allowNull: false
-    },
-    description: {
-        type: DataTypes.STRING,
-        allowNull: false
+        allowNull:false
     },
     brand: {
         type: DataTypes.STRING,
@@ -30,10 +26,5 @@ export const ProductModel = sequelize.define('product', {
     location: {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    dateLastMaintenance: {
-        type: DataTypes.DATE,
-        allowNull: true
-    },
-
+    }
 })

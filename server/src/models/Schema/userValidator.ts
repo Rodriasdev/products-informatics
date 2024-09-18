@@ -1,10 +1,7 @@
 import { body } from 'express-validator';
 
 export const userValidationRules = [
-  // body('username')
-  //   .notEmpty().withMessage('El nombre de usuario es obligatorio')
-  //   .isString().withMessage('El nombre de usuario debe ser una cadena de texto'),
-  
+
   body('email')
     .notEmpty().withMessage('El correo electrónico es obligatorio')
     .isEmail().withMessage('Debe proporcionar un correo electrónico válido')

@@ -1,24 +1,21 @@
 import React, { useState } from 'react';
-
-interface Equipment {
-  id: number;
-  name: string;
-  status: string;
-  location: string;
-  acquisitionDate: string;
-}
+import { productDto } from '../../types/product.dto';
+import useAuth from '../../hooks/useAuth';
 
 export const Products = () => {
-  const [equipments, setEquipments] = useState<Equipment[]>([
-    { id: 1, name: 'Laptop Dell XPS', status: 'Activo', location: 'Oficina A', acquisitionDate: '2023-01-15' },
-    { id: 2, name: 'Impresora HP LaserJet', status: 'En mantenimiento', location: 'Almacén', acquisitionDate: '2022-11-30' },
-  ]);
+  // const [equipments, setEquipments] = useState<productDto[]>([
+  //   { id: 1, name: 'Laptop Dell XPS', status: 'Activo', location: 'Oficina A', acquisitionDate: '2023-01-15' },
+  //   { id: 2, name: 'Impresora HP LaserJet', status: 'En mantenimiento', location: 'Almacén', acquisitionDate: '2022-11-30' },
+  // ]);
+  const {authState} = useAuth()
 
-  const [newEquipment, setNewEquipment] = useState<Omit<Equipment, 'id'>>({
+  const [newEquipment, setNewEquipment] = useState<Omit<productDto, 'id'>>({
     name: '',
-    status: '',
+    state: '',
     location: '',
-    acquisitionDate: '',
+    acquisition_date: '',
+    brand: '',
+    model: ''
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,10 +23,23 @@ export const Products = () => {
     setNewEquipment(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setEquipments(prev => [...prev, { ...newEquipment, id: prev.length + 1 }]);
-    setNewEquipment({ name: '', status: '', location: '', acquisitionDate: '' });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/product`,{
+      method:'POST',
+      body: JSON.stringify(newEquipment),
+      headers:{
+        'content-type': 'application/json',
+        authorization: authState.token!
+      }
+    })
+
+    const data = await response.json()
+
+    console.log(data);
+    
+
   };
 
   return (
@@ -41,9 +51,9 @@ export const Products = () => {
               <div className="card-body">
                 <h5 className="card-title">Resumen de Inventario</h5>
                 <p className="card-text">
-                  Total de equipos: {equipments.length}<br />
+                  {/* Total de equipos: {equipments.length}<br />
                   Equipos activos: {equipments.filter(e => e.status === 'Activo').length}<br />
-                  En mantenimiento: {equipments.filter(e => e.status === 'En mantenimiento').length}
+                  En mantenimiento: {equipments.filter(e => e.status === 'En mantenimiento').length} */}
                 </p>
               </div>
             </div>
@@ -67,13 +77,39 @@ export const Products = () => {
                       />
                     </div>
                     <div className="col-md-6 mb-3">
-                      <label htmlFor="status" className="form-label">Estado</label>
+                      <label htmlFor="state" className="form-label">Estado</label>
                       <input 
                         type="text" 
                         className="form-control" 
-                        id="status" 
-                        name="status" 
-                        value={newEquipment.status} 
+                        id="state" 
+                        name="state" 
+                        value={newEquipment.state} 
+                        onChange={handleInputChange} 
+                        required 
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-6 mb-3">
+                      <label htmlFor="name" className="form-label">Marca</label>
+                      <input 
+                        type="text" 
+                        className="form-control" 
+                        id="brand" 
+                        name="brand" 
+                        value={newEquipment.brand} 
+                        onChange={handleInputChange} 
+                        required 
+                      />
+                    </div>
+                    <div className="col-md-6 mb-3">
+                      <label htmlFor="status" className="form-label">Modelo</label>
+                      <input 
+                        type="text" 
+                        className="form-control" 
+                        id="model" 
+                        name="model" 
+                        value={newEquipment.model} 
                         onChange={handleInputChange} 
                         required 
                       />
@@ -97,9 +133,9 @@ export const Products = () => {
                       <input 
                         type="date" 
                         className="form-control" 
-                        id="acquisitionDate" 
-                        name="acquisitionDate" 
-                        value={newEquipment.acquisitionDate} 
+                        id="acquisition_date" 
+                        name="acquisition_date" 
+                        value={newEquipment.acquisition_date} 
                         onChange={handleInputChange} 
                         required 
                       />
@@ -128,7 +164,7 @@ export const Products = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {equipments.map(equipment => (
+                    {/* {equipments.map(equipment => (
                       <tr key={equipment.id}>
                         <td>{equipment.id}</td>
                         <td>{equipment.name}</td>
@@ -136,7 +172,7 @@ export const Products = () => {
                         <td>{equipment.location}</td>
                         <td>{equipment.acquisitionDate}</td>
                       </tr>
-                    ))}
+                    ))} */}
                   </tbody>
                 </table>
               </div>

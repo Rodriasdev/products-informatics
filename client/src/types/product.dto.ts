@@ -7,6 +7,7 @@ export interface productDto {
     state?: string;
     location?: string;
 }
+
 export interface updateProductDto extends productDto{
     id:number
 }
