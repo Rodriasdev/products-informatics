@@ -54,6 +54,20 @@ class ProductController {
       res.status(500).json({ message: "Error updating product", error });
     }
   }
+
+  
+  async delete(req: Request, res: Response) {
+    try {
+      const id = parseInt(req.params.id)
+      await ProductService.delete(id);
+
+      res.status(200).json({
+        message: "Product deleted"
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Error deleted product", error });
+    }
+  }
 }
 
 export default new ProductController();

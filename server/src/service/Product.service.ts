@@ -35,6 +35,14 @@ class ProductService {
 
         return await product.update(data)
     }
+
+    async delete(id:number){
+        return await ProductModel.destroy({
+            where: {
+                id:id
+            }
+        })
+    }
 }
 
 export default new ProductService()
