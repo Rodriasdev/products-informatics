@@ -1,24 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { productDto } from '../../types/product.dto';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
+import { ProductList } from './ProductList';
+
 
 export const Products = () => {
   const {authState} = useAuth()
-
-  const [newEquipment, setNewEquipment] = useState<Omit<productDto, 'id'>>({
+  const [productState, setProductState] = useState<Array<productDto>>([])
+  const [newEquipment, setNewEquipment] = useState<productDto>({
     name: '',
-    state: '',
+    state: 'Disponible',
     location: '',
     acquisition_date: '',
     brand: '',
     model: ''
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setNewEquipment(prev => ({ ...prev, [name]: value }));
   };
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -51,6 +54,16 @@ export const Products = () => {
     
 
   };
+
+  useEffect(() => {
+    (
+      async () => {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/product`)
+        const data = await response.json()
+        setProductState(data)
+      }
+    )()
+  },[])
 
   return (
     <div className="bg-light min-vh-100">
@@ -123,15 +136,17 @@ export const Products = () => {
                   </div>
                   <div className="row">
                     <div className="col-md-6 mb-3">
-                        <label htmlFor="state" className="form-label">Estado</label>
-                        <input 
-                          type="text" 
-                          className="form-control" 
-                          id="state" 
-                          name="state" 
-                          value={newEquipment.state} 
-                          onChange={handleInputChange}  
-                        />
+                    <select 
+                    onChange={handleInputChange} 
+                    value={newEquipment.state} 
+                    name="state" 
+                    className="form-select"
+                  >
+                    <option value="Disponible">Disponible</option>
+                    <option value="Reparación">Reparación</option>
+                    <option value="Fuera de servicio">Fuera de servicio</option>
+                  </select>
+
                       </div>
                     <div className="col-md-6 mb-3">
                       <label htmlFor="location" className="form-label">Ubicación</label>
@@ -152,7 +167,7 @@ export const Products = () => {
           </div>
         </div>
 
-
+        <ProductList productState={productState}/>
 
       </div>
     </div>

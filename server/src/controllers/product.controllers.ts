@@ -7,8 +7,8 @@ class ProductController {
   async create(req: Request, res: Response) {
     try {
       const data: productDto = req.body;
-    //   const newProduct = await ProductService.create(data);
-      res.status(201).json(data);
+      const newProduct = await ProductService.create(data);
+      res.status(201).json(newProduct);
     } catch (error) {
       res.status(500).json({ message: "Error creating product", error });
     }
