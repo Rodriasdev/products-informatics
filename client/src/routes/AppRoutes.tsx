@@ -3,7 +3,7 @@ import { Register } from "../pages/Register";
 import { Home } from "../pages/Home";
 import { PrivateRoute } from "./PrivateRoutes";
 import { AddProduct } from "../pages/AddProduct";
-
+import { EditProduct } from "../pages/EditProduct";
 
 export const AppRoutes = () => {
 
@@ -28,6 +28,14 @@ export const AppRoutes = () => {
                     element={
                         <PrivateRoute>
                             <AddProduct/>
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/form-edit-product/:id"
+                    element={
+                        <PrivateRoute>
+                            <EditProduct/>
                         </PrivateRoute>
                     }
                 />

@@ -6,7 +6,7 @@ export const AddProduct = () => {
     return (
         <>
             <Header/>
-            <FormProduct/>
+            <FormProduct  request={"POST"}/>
         </>
     )
 }

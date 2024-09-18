@@ -1,10 +1,15 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import { productDto } from "../../types/product.dto";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
-export const FormProduct = () => {
+interface props {
+    request:string;
+    id?: string;
+}
+
+export const FormProduct : React.FC<props> = ({request,id}) => {
     const navigate = useNavigate()
     const {authState} =useAuth()
     const [newEquipment, setNewEquipment] = useState<productDto>({
@@ -25,47 +30,63 @@ export const FormProduct = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/product`,{
-      method:'POST',
-      body: JSON.stringify(newEquipment),
-      headers:{
-        'content-type': 'application/json',
-        authorization: authState.token!
-      }
-    })
-
-    const data = await response.json()
-
-
-
-    if (data.errors) {
-      return Swal.fire({
-        title: 'Error',
-        text: data.errors[0].msg,
-        icon: 'error',
-        width: '50%',
-        padding: '1rem',
-        background: '#DBCBCB',
-        grow: 'row'
-      })
+    if(request === "POST"){
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/product`,{
+          method:'POST',
+          body: JSON.stringify(newEquipment),
+          headers:{
+            'content-type': 'application/json',
+            authorization: authState.token!
+          }
+        })
+    
+        const data = await response.json()
+    
+    
+    
+        if (data.errors) {
+          return Swal.fire({
+            title: 'Error',
+            text: data.errors[0].msg,
+            icon: 'error',
+            width: '50%',
+            padding: '1rem',
+            background: '#DBCBCB',
+            grow: 'row'
+          })
+        }
+    
+    
+        Swal.fire({
+          title: 'Producto agregado',
+          icon: 'success',
+          width: '50%',
+          padding: '1rem',
+          background: '#DBCBCB',
+          grow: 'row'
+        }).then((result) => {
+            if (result.isConfirmed) {
+              navigate('/home')
+            }
+          })
     }
 
+    if(request === "PUT"){
 
-    Swal.fire({
-      title: 'Producto agregado',
-      icon: 'success',
-      width: '50%',
-      padding: '1rem',
-      background: '#DBCBCB',
-      grow: 'row'
-    }).then((result) => {
-        if (result.isConfirmed) {
-          navigate('/home')
-        }
-      })
-
-
+    }
   };
+
+  useEffect(() => {
+    if(request==="PUT"){
+        (
+            async() => {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/product/${id}`)
+                const data = await response.json()
+                setNewEquipment(data)
+            }
+        )()
+    }
+  },[])
   
 
     return (
