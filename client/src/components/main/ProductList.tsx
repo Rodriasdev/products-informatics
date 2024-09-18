@@ -47,6 +47,8 @@ export const ProductList: React.FC<Props> = ({productState, setReloadList, reloa
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
                         <th>Estado</th>
                         <th>Ubicación</th>
                         <th>Fecha de Adquisición</th>
@@ -57,6 +59,8 @@ export const ProductList: React.FC<Props> = ({productState, setReloadList, reloa
                         <tr key={product.id}>
                         <td>{product.id}</td>
                         <td>{product.name}</td>
+                        <td>{product.brand}</td>
+                        <td>{product.model}</td>
                         <td>{product.state}</td>
                         <td>{product.location}</td>
                         <td>{product.acquisition_date}</td>
