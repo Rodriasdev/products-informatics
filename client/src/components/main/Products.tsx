@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { productDto } from '../../types/product.dto';
 import useAuth from '../../hooks/useAuth';
+import Swal from 'sweetalert2';
 
 export const Products = () => {
-  // const [equipments, setEquipments] = useState<productDto[]>([
-  //   { id: 1, name: 'Laptop Dell XPS', status: 'Activo', location: 'Oficina A', acquisitionDate: '2023-01-15' },
-  //   { id: 2, name: 'Impresora HP LaserJet', status: 'En mantenimiento', location: 'Almacén', acquisitionDate: '2022-11-30' },
-  // ]);
   const {authState} = useAuth()
 
   const [newEquipment, setNewEquipment] = useState<Omit<productDto, 'id'>>({
@@ -37,7 +34,20 @@ export const Products = () => {
 
     const data = await response.json()
 
-    console.log(data);
+
+
+    if (data.errors) {
+      return Swal.fire({
+        title: 'Error',
+        text: data.errors[0].msg,
+        icon: 'error',
+        width: '50%',
+        padding: '1rem',
+        background: '#DBCBCB',
+        grow: 'row'
+      })
+    }
+
     
 
   };
@@ -72,24 +82,9 @@ export const Products = () => {
                         id="name" 
                         name="name" 
                         value={newEquipment.name} 
-                        onChange={handleInputChange} 
-                        required 
+                        onChange={handleInputChange}  
                       />
                     </div>
-                    <div className="col-md-6 mb-3">
-                      <label htmlFor="state" className="form-label">Estado</label>
-                      <input 
-                        type="text" 
-                        className="form-control" 
-                        id="state" 
-                        name="state" 
-                        value={newEquipment.state} 
-                        onChange={handleInputChange} 
-                        required 
-                      />
-                    </div>
-                  </div>
-                  <div className="row">
                     <div className="col-md-6 mb-3">
                       <label htmlFor="name" className="form-label">Marca</label>
                       <input 
@@ -98,10 +93,11 @@ export const Products = () => {
                         id="brand" 
                         name="brand" 
                         value={newEquipment.brand} 
-                        onChange={handleInputChange} 
-                        required 
+                        onChange={handleInputChange}  
                       />
                     </div>
+                  </div>
+                  <div className="row">
                     <div className="col-md-6 mb-3">
                       <label htmlFor="status" className="form-label">Modelo</label>
                       <input 
@@ -110,22 +106,7 @@ export const Products = () => {
                         id="model" 
                         name="model" 
                         value={newEquipment.model} 
-                        onChange={handleInputChange} 
-                        required 
-                      />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6 mb-3">
-                      <label htmlFor="location" className="form-label">Ubicación</label>
-                      <input 
-                        type="text" 
-                        className="form-control" 
-                        id="location" 
-                        name="location" 
-                        value={newEquipment.location} 
-                        onChange={handleInputChange} 
-                        required 
+                        onChange={handleInputChange}  
                       />
                     </div>
                     <div className="col-md-6 mb-3">
@@ -136,8 +117,31 @@ export const Products = () => {
                         id="acquisition_date" 
                         name="acquisition_date" 
                         value={newEquipment.acquisition_date} 
-                        onChange={handleInputChange} 
-                        required 
+                        onChange={handleInputChange}  
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-6 mb-3">
+                        <label htmlFor="state" className="form-label">Estado</label>
+                        <input 
+                          type="text" 
+                          className="form-control" 
+                          id="state" 
+                          name="state" 
+                          value={newEquipment.state} 
+                          onChange={handleInputChange}  
+                        />
+                      </div>
+                    <div className="col-md-6 mb-3">
+                      <label htmlFor="location" className="form-label">Ubicación</label>
+                      <input 
+                        type="text" 
+                        className="form-control" 
+                        id="location" 
+                        name="location" 
+                        value={newEquipment.location} 
+                        onChange={handleInputChange}  
                       />
                     </div>
                   </div>
@@ -148,37 +152,8 @@ export const Products = () => {
           </div>
         </div>
 
-        <div className="row mt-4">
-          <div className="col">
-            <div className="card">
-              <div className="card-body">
-                <h5 className="card-title">Inventario de Equipos</h5>
-                <table className="table table-striped table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Nombre</th>
-                      <th>Estado</th>
-                      <th>Ubicación</th>
-                      <th>Fecha de Adquisición</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {/* {equipments.map(equipment => (
-                      <tr key={equipment.id}>
-                        <td>{equipment.id}</td>
-                        <td>{equipment.name}</td>
-                        <td>{equipment.status}</td>
-                        <td>{equipment.location}</td>
-                        <td>{equipment.acquisitionDate}</td>
-                      </tr>
-                    ))} */}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
+
+
       </div>
     </div>
   );
